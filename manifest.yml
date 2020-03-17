@@ -1,0 +1,17 @@
+applications:
+- name: employee-service
+  path: target/employee-service-0.0.1-SNAPSHOT.jar
+  timeout: 120
+  buildpacks:
+  - https://github.com/cloudfoundry/java-buildpack.git
+  disk_quota: 1G
+  instances: 1
+  memory: 512M
+  routes:
+  - route: employee-service11.cfapps.io
+  env:
+    JAVA_OPTS: '-XX:ReservedCodeCacheSize=32M -XX:MaxDirectMemorySize=32M'
+    JBP_CONFIG_OPEN_JDK_JRE: '[memory_calculator: {stack_threads: 30}]'  
+  services:
+  - registry-service     
+  stack: cflinuxfs3
